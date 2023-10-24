@@ -12,7 +12,7 @@ class C(B):
 def main():
     while True:
         try:
-            device_name, credit, event_id = str(input('DEVICE, CREDIT, EVENT_ID: ').split())
+            device_name, credit, event_id = input('DEVICE, CREDIT, EVENT_ID: ')
             
         except ValueError:
             print('Error while entering!')
