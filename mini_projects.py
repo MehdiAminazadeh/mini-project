@@ -1,5 +1,4 @@
 from random import randint
-from mini_project2 import C
 
 class A(object):
     device_counter = 0
