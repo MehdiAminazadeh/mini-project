@@ -73,7 +73,7 @@ class B(A):
     
     def check_crediblity(self, name, credit):
             cpu_name = ["Xeon", "i5", "i7"]
-            self._cpu = {self.cpu[index]: cpu_name[index] for index in range(len(cpu_name))}
+            self._cpu = {self._cpu[index]: cpu_name[index] for index in range(len(cpu_name))}
             if name not in self._cpu:
                 print('name not in category')
                 return
