@@ -41,7 +41,7 @@ class B(A):
             A.__repr__(self)
             #Represent all the devices added to cpu(s) information
         
-    def add_device_strictly(self, ip:int, critical:float, cpu_type: dict[int:'str']):
+    def add_device_strictly(self, ip:int, critical:float, cpu_type: dict[int, str]):
         # set the ip of critical device
         while isinstance(critical, float):
             critical += 0.2
