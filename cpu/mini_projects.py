@@ -1,8 +1,9 @@
 from random import randint
+from typing import Optional
 
 class A(object):
     device_counter = 0
-    def __init__(self, event_id:int = None):
+    def __init__(self, event_id: int = None):
          self._cpu = [1, 2, 3]
          self.event_id = event_id
          if self.event_id is not None:
@@ -41,7 +42,7 @@ class B(A):
             A.__repr__(self)
             #Represent all the devices added to cpu(s) information
         
-    def add_device_strictly(self, ip:int, critical:float, cpu_type: dict[int, str]):
+    def add_device_strictly(self, ip:int, critical:float, cpu_type: dict[int:'str']):
         # set the ip of critical device
         while isinstance(critical, float):
             critical += 0.2
@@ -71,16 +72,12 @@ class B(A):
         ip, critical_level, cpu_type = self.add_device_strictly(self._ip, 5.2, cpu_type={1:"Xeon"})
         return ip, critical_level, cpu_type
     
-    def check_crediblity(self, name, credit):
-            cpu_name = ["Xeon", "i5", "i7"]
-            self._cpu = {self._cpu[index]: cpu_name[index] for index in range(len(cpu_name))}
-            if name not in self._cpu:
-                print('name not in category')
-                return
-            else:
-                return self.unkown_device_handler(name)
+    def check_crediblity(self, name, credit:Optional[bool]=None):
+        cpu_name = ["Xeon", "i5", "i7"]
+        self._cpu = {self.cpu[index]: cpu_name[index] for index in range(len(cpu_name))}
+        if name not in self._cpu:
+            print('name not in category')
+            return
+        else:
+            return self.unkown_device_handler(name)
             
-if __name__ == "__main__":  
-    device_A = A() 
-    device_B = B(0)
-   
