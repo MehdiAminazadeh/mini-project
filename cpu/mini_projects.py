@@ -1,14 +1,20 @@
-from random import randint
-from typing import Optional
+# import other libraries as needed 
 
-class A(object):
+from random import randint
+import psutil
+import platform
+import os
+
+
+class Device(object):
     device_counter = 0
-    def __init__(self, event_id: int = None):
+    def __init__(self, event_id: int = None, termin:bool=False):
          self._cpu = [1, 2, 3]
          self.event_id = event_id
          if self.event_id is not None:
             self.event_id = ['Active']
-            A.device_counter += 1
+            Device.device_counter += 1
+         self.termin = termin
          
     def set_ip(self):
         if self.event_id:
@@ -17,19 +23,48 @@ class A(object):
         else:
             print("No Event id given")
             return
+        
+    def get_info(self):
+        cpu_info = {
+        'CPU Type': platform.processor(),
+        'CPU Cores': psutil.cpu_count(logical=False),
+        'Logical CPUs': psutil.cpu_count(logical=True),
+        'CPU Usage (%)': psutil.cpu_percent(interval=1),
+    }
+        return cpu_info
     
+    def terminate(self):
+        from logging import info
+        if self.termin == True and self.event_id is not None and Device.device_counter > 1:
+            while Device.device_counter != 0:
+                Device.device_counter -= 1
+                self.event_id.pop()
+            else:
+                pass
+                
+            for process in psutil.process_iter(['pid', 'name']):
+                process.info['name'] == "q".lower() if self.termin else None
+                process.terminate()
+                print("Terminated")
+                return True
+            print("The key entered is wrong. Should be 'q' ")
+            return False
+        
+        with open("cpu_info.txt", mode='w', encoding='utf-8', newline='\r\n') as cpu_info:
+            for key, val in self.get_info():
+                cpu_info.write(f"{key}: {val}")
+        info("Complete SAVE")   
+                
     def __repr__(self) -> str:
         if self.event_id:
             print(f"The cpu is connected with ip of {self._ip} and it is {self.event_id}")
         return
     
-    def __del__(self):
-        pass
         
-class B(A):
+class DeciceCheck(Device):
     def __init__(self, event_id):
         super().__init__(event_id)
-        self.ip = super().set_ip()
+        self.ip = super().set_ip() 
         
     def unkown_device_handler(self, device_name:int):
         from time import sleep
@@ -39,45 +74,11 @@ class B(A):
             self.event_id.append('Semi-Active')
             print(f'Current state of event_id is: {self.event_id}')
         else:
-            A.__repr__(self)
+            Device.__repr__(self)
             #Represent all the devices added to cpu(s) information
         
-    def add_device_strictly(self, ip:int, critical:float, cpu_type: dict[int:'str']):
-        # set the ip of critical device
-        while isinstance(critical, float):
-            critical += 0.2
-            if critical % 2:
-                critical = int(critical)
-                _ip = ip
-                return _ip, critical, cpu_type
-            else:
-               ip = self.ip 
-        else:
-                
-            for keys in cpu_type.keys():
-                if keys not in self._cpu:
-                    print('Not found in cpu types')
-                else:
-                    self._other_cpu = cpu_type.values()
-            _critical = critical
-            return ip, _critical
-    
-    
-    def critical_devices(self):
-        pass
-    
-       
-    @critical_devices
-    def add_critical(self):
-        ip, critical_level, cpu_type = self.add_device_strictly(self._ip, 5.2, cpu_type={1:"Xeon"})
-        return ip, critical_level, cpu_type
-    
-    def check_crediblity(self, name, credit:Optional[bool]=None):
-        cpu_name = ["Xeon", "i5", "i7"]
-        self._cpu = {self.cpu[index]: cpu_name[index] for index in range(len(cpu_name))}
-        if name not in self._cpu:
-            print('name not in category')
-            return
-        else:
-            return self.unkown_device_handler(name)
-            
+
+"""Logic given for further Operation!
+___coding in different modules perplexes the implementation process
+___GHEP Electronics --> Check  
+"""
