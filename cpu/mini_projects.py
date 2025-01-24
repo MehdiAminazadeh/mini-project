@@ -83,7 +83,3 @@ class DeciceCheck(Device):
             #Represent all the devices added to cpu(s) information
         
 
-"""Logic given for further Operation!
-___coding in different modules perplexes the implementation process
-___GHEP Electronics --> Check  
-"""
